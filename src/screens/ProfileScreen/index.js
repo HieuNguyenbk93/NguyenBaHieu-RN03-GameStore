@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { Component } from 'react'
+import { Text, View, StyleSheet } from 'react-native'
 
-export default class Home extends Component {
+export default class ProfileScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text> HomeScreen </Text>
+                <Text> Profile Component </Text>
             </View>
         )
     }
@@ -18,4 +18,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
 })
-
