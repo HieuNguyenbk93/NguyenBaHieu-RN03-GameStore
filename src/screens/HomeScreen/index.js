@@ -1,10 +1,13 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import { View, StyleSheet, Image, FlatList } from 'react-native'
+import { getListGame } from '../../api'
 import { BackgroundView, Text } from '../../components'
 import { COLORS } from '../../themes/styles'
 import { mapIP } from '../../utils/common'
 import GameItem from './components/GameItem'
+import Entypo from 'react-native-vector-icons/Entypo'
+import { ScreenName } from '../../utils/constants'
 
 export default class HomeScreen extends Component {
 
@@ -14,11 +17,12 @@ export default class HomeScreen extends Component {
     }
 
     componentDidMount(){
-        axios({method:'GET', url:'http://10.0.2.2:3000/games'})
+        //axios({method:'GET', url:'http://10.0.2.2:3000/games'})
+        getListGame()
         .then(result => {
-            console.log('===================',result.data);
+            //console.log('===================',result.data);
             const listGame = mapIP(result.data);
-            console.log('----------', listGame);
+            //console.log('----------', listGame);
             this.setState({listGame, loading: false});
         })
         .catch(err => {
@@ -28,6 +32,7 @@ export default class HomeScreen extends Component {
     }
 
     render() {
+        const {navigation} = this.props;
         const { listGame, loading } = this.state;
         return (
             <BackgroundView>
@@ -40,12 +45,15 @@ export default class HomeScreen extends Component {
                             </Text>
                             <Text>Best game for today</Text>
                         </View>
-                        <View style={styles.avatar}/>
+                        <View style={styles.avatar}>
+                            <Entypo name='user' size={26}/>
+                        </View>
                     </View>
 
                     <FlatList 
                         data= {listGame}
-                        renderItem = { ({item}) => <GameItem gameItem={item}/>}
+                        renderItem = { ({item}) => <GameItem gameItem={item} onPress={()=> navigation.navigate(ScreenName.detail, {id: item.id})} />}
+                        showsVerticalScrollIndicator = {false}
                     />
                 </>
                 )}

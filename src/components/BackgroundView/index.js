@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StatusBar, StyleSheet, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { StatusBar, StyleSheet, Text, View, SafeAreaView } from 'react-native'
+// import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS } from '../../themes/styles'
 
 export default class BackgroundView extends Component {
