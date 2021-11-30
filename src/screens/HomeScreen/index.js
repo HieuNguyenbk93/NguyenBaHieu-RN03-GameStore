@@ -8,59 +8,68 @@ import { mapIP } from '../../utils/common'
 import GameItem from './components/GameItem'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ScreenName } from '../../utils/constants'
+import { connect } from 'react-redux'
+import { setListGame, getRequest, getRequestFail, getRequestSuccess } from '../../redux/actios/gameActions'
 
-export default class HomeScreen extends Component {
-
-    state = {
-        gameDetail: {},
-        loading: true,
-    }
+class HomeScreen extends Component {
 
     componentDidMount(){
-        //axios({method:'GET', url:'http://10.0.2.2:3000/games'})
+        this.props.getRequest();
         getListGame()
         .then(result => {
-            //console.log('===================',result.data);
             const listGame = mapIP(result.data);
-            //console.log('----------', listGame);
-            this.setState({listGame, loading: false});
+            this.props.setListGame(listGame);
+            this.props.getRequestSuccess();
         })
         .catch(err => {
+            this.props.getRequestFail();
             console.log(err);
-            this.setState({loading: false});
         });
     }
 
     render() {
-        const {navigation} = this.props;
-        const { listGame, loading } = this.state;
+        const { listGame } = this.props;
         return (
             <BackgroundView>
-                {!loading && (
-                <>
-                    <View style={styles.headerContainer}>
-                        <View>
-                            <Text style={styles.headerText}>
-                                Hello <Text style={styles.fontBold}>CyberSoft</Text>
-                            </Text>
-                            <Text>Best game for today</Text>
-                        </View>
-                        <View style={styles.avatar}>
-                            <Entypo name='user' size={26}/>
-                        </View>
+                <View style={styles.headerContainer}>
+                    <View>
+                        <Text style={styles.headerText}>
+                            Hello <Text style={styles.fontBold}>CyberSoft</Text>
+                        </Text>
+                        <Text>Best game for today</Text>
                     </View>
+                    <View style={styles.avatar}>
+                        <Entypo name='user' size={26}/>
+                    </View>
+                </View>
 
-                    <FlatList 
-                        data= {listGame}
-                        renderItem = { ({item}) => <GameItem gameItem={item} onPress={()=> navigation.navigate(ScreenName.detail, {id: item.id})} />}
-                        showsVerticalScrollIndicator = {false}
-                    />
-                </>
-                )}
+                <FlatList 
+                    data= {listGame}
+                    renderItem = { ({item}) => <GameItem gameItem={item} />}
+                    showsVerticalScrollIndicator = {false}
+                />
             </BackgroundView>
         )
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setListGame: (listGame) => dispatch(setListGame(listGame)),
+        getRequest: () => dispatch(getRequest()),
+        getRequestFail: () => dispatch(getRequestFail()),
+        getRequestSuccess: () => dispatch(getRequestSuccess()),
+    }
+};
+
+const mapStatesToProps = state => {
+    return {
+        listGame: state.gameReducer.listGame,
+        isFetching: state.gameReducer.isFetching,
+    }
+};
+
+export default connect(mapStatesToProps, mapDispatchToProps)(HomeScreen);
 
 const styles = StyleSheet.create({
     headerContainer: {

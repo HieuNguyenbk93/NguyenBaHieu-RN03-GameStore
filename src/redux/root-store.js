@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from "redux";
-import empty from "./reducers/empty";
+import gameReducer from "./reducers/gameReducer";
 
-const rootReducers = combineReducers({empty})
+const rootReducers = combineReducers({gameReducer})
 
 export const store = createStore(rootReducers)
