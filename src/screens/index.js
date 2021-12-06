@@ -1,5 +1,5 @@
-import HomeScreen from "./HomeScreen";
-import DetailScreen from "./DetailScreen";
+import HomeScreen from "./HomeScreen/HomeScreenHook";
+import DetailScreen from "./DetailScreen/DetailScreenHook";
 import ProfileScreen from "./ProfileScreen";
 import StreamScreen from "./StreamScreen";
 
