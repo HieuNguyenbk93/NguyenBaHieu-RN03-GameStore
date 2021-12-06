@@ -1,30 +1,29 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import { View, StyleSheet, Image, FlatList } from 'react-native'
-import { getListGame } from '../../api'
 import { BackgroundView, Text } from '../../components'
 import { COLORS } from '../../themes/styles'
-import { mapIP } from '../../utils/common'
 import GameItem from './components/GameItem'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ScreenName } from '../../utils/constants'
 import { connect } from 'react-redux'
-import { setListGame, getRequest, getRequestFail, getRequestSuccess } from '../../redux/actios/gameActions'
+import { getRequestListGame } from '../../redux/thunk/gameThunkAction'
 
 class HomeScreen extends Component {
 
     componentDidMount(){
-        this.props.getRequest();
-        getListGame()
-        .then(result => {
-            const listGame = mapIP(result.data);
-            this.props.setListGame(listGame);
-            this.props.getRequestSuccess();
-        })
-        .catch(err => {
-            this.props.getRequestFail();
-            console.log(err);
-        });
+        // this.props.getRequest();
+        // getListGame()
+        // .then(result => {
+        //     const listGame = mapIP(result.data);
+        //     this.props.setListGame(listGame);
+        //     this.props.getRequestSuccess();
+        // })
+        // .catch(err => {
+        //     this.props.getRequestFail();
+        //     console.log(err);
+        // });
+        this.props.getRequestListGame();
     }
 
     render() {
@@ -55,10 +54,7 @@ class HomeScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setListGame: (listGame) => dispatch(setListGame(listGame)),
-        getRequest: () => dispatch(getRequest()),
-        getRequestFail: () => dispatch(getRequestFail()),
-        getRequestSuccess: () => dispatch(getRequestSuccess()),
+        getRequestListGame: () => dispatch(getRequestListGame()),
     }
 };
 

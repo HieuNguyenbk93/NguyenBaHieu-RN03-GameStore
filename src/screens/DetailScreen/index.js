@@ -1,30 +1,18 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native'
-import { getGameById } from '../../api';
 import { BackgroundView } from '../../components';
 import { mapIP } from '../../utils/common';
 import GameItem from '../HomeScreen/components/GameItem';
 import { Text } from '../../components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { COLORS } from '../../themes/styles';
-import { setGameDetail, getRequest, getRequestFail, getRequestSuccess } from '../../redux/actios/gameActions';
 import { connect } from 'react-redux';
+import { getRequestGameById } from '../../redux/thunk/gameThunkAction';
 
 class DetailScreen extends Component {
 
     componentDidMount() {
-        this.props.getRequest();
-        getGameById(this.props.route.params.id)
-        .then(res => {
-            const game = mapIP(res.data);
-            console.log('--game--', game);
-            this.props.setGameDetail(game);
-            this.props.getRequestSuccess();
-        })
-        .catch(err => {
-            this.props.getRequestFail();
-            console.log(err)
-        });
+        this.props.getRequestGameById(this.props.route.params.id);
     }
 
     renderStart = () => {
@@ -96,10 +84,7 @@ class DetailScreen extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    setGameDetail: game => dispatch(setGameDetail(game)),
-    getRequest: () => dispatch(getRequest()),
-    getRequestFail: () => dispatch(getRequestFail()),
-    getRequestSuccess: () => dispatch(getRequestSuccess()),
+    getRequestGameById: id => dispatch(getRequestGameById(id))
 });
 
 const mapStatesToProps = state => ({
