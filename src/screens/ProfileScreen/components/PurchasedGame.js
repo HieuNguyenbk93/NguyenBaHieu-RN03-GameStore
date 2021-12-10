@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Image } from 'react-native';
 import { Text } from '../../../components';
+import { COLORS } from '../../../themes/styles';
 
 export default class PurchasedGame extends Component {
     render() {
@@ -15,11 +16,11 @@ export default class PurchasedGame extends Component {
                         />
                     </View>
                     <View>
-                        <Text style={styles.fontSize}>{gameItem.title}</Text>
+                        <Text style={styles.text}>{gameItem.title}</Text>
                         <Text>825 Sales</Text>
                     </View>
                 </View>
-                <Text style={styles.fontSize}>35$</Text>
+                <Text style={styles.text} color={COLORS.lightPurple}>35$</Text>
             </View>
         )
     }
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         margin: 10,
+        width: '80%'
     },
     image: {
         height: 80,
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginRight: 20,
     },
-    fontSize: {
+    text: {
         fontSize: 18,
     }
 })

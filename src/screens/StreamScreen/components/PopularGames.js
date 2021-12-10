@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 
 export default class PopularGames extends Component {
     render() {

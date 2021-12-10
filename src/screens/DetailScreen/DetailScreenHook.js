@@ -6,13 +6,18 @@ import GameItem from '../HomeScreen/components/GameItem';
 import { Text } from '../../components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { COLORS } from '../../themes/styles';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { getRequestGameById } from '../../redux/thunk/gameThunkAction';
+import { getGameDetailSelector, isFetchingSelector} from '../../redux/selectors/gameSelector'
 
-const DetailScreen = ({game, navigation,route, getRequestGameById, isFetching}) => {
 
+const DetailScreen = ({navigation,route}) => {
+
+    const dispatch = useDispatch();
+    const game = useSelector(getGameDetailSelector);
+    const isFetching = useSelector(isFetchingSelector);
     useEffect(() => {
-        getRequestGameById(route.params.id);
+        dispatch(getRequestGameById(route.params.id));
     }, [])
 
     const renderStart = () => {
@@ -80,16 +85,7 @@ const DetailScreen = ({game, navigation,route, getRequestGameById, isFetching}) 
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    getRequestGameById: id => dispatch(getRequestGameById(id))
-});
-
-const mapStatesToProps = state => ({
-    game: state.gameReducer.gameDetail,
-    isFetching: state.gameReducer.isFetching,
-})
-
-export default connect(mapStatesToProps,mapDispatchToProps)(DetailScreen)
+export default DetailScreen
 
 const styles = StyleSheet.create({
     container: {

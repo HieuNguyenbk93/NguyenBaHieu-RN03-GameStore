@@ -6,14 +6,19 @@ import { COLORS } from '../../themes/styles'
 import GameItem from './components/GameItem'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ScreenName } from '../../utils/constants'
-import { connect } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import { getRequestListGame } from '../../redux/thunk/gameThunkAction'
+import { getListGameSelector } from '../../redux/selectors/gameSelector'
 
-const HomeScreen = ({listGame, getRequestListGame}) => {
+//const HomeScreen = ({listGame, getRequestListGame}) => {
+const HomeScreen = () => {
+
+    const dispatch = useDispatch();
+    const listGame = useSelector(getListGameSelector);
 
     useEffect(() => {
         console.log('Home Screen Hook');
-        getRequestListGame();
+        dispatch(getRequestListGame());
     }, [])
 
     return (
@@ -39,20 +44,22 @@ const HomeScreen = ({listGame, getRequestListGame}) => {
     )
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getRequestListGame: () => dispatch(getRequestListGame()),
-    }
-};
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         getRequestListGame: () => dispatch(getRequestListGame()),
+//     }
+// };
 
-const mapStatesToProps = state => {
-    return {
-        listGame: state.gameReducer.listGame,
-        isFetching: state.gameReducer.isFetching,
-    }
-};
+// const mapStatesToProps = state => {
+//     return {
+//         listGame: state.gameReducer.listGame,
+//         isFetching: state.gameReducer.isFetching,
+//     }
+// };
 
-export default connect(mapStatesToProps, mapDispatchToProps)(HomeScreen);
+//export default connect(mapStatesToProps, mapDispatchToProps)(HomeScreen);
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
     headerContainer: {
